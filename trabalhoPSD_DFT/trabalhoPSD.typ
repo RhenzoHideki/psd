@@ -13,7 +13,7 @@
 = Questão 1
 As duas sequências de oitos $x_1 [n]$ e $x_2 [n]$ mostradas na figura a seguir têm DFT's $X_1 [k]$ e $X_2 [k]$, respectivamente. Determine a relação entre $X_1 [k]$ e $X_2[k]$
 
-Resolução:
+== Resolução Teórica
 
 - Observando $x_1 [n]$ temos:
 $x_1 [n] = 0 delta(n) + a delta(n-1) + b delta(n-2) + c delta(n-3) + d delta(n-4) + e delta(n-5) \ + 0 delta(n-6) +0 delta(n-7) + 0 delta(n-8)$
@@ -26,6 +26,49 @@ Observando ambos, podemos desconsiderar o $delta(n-8)$ e considerar a janela de 
 Com essas considerações podemos concluir que:
 
 $x[(n-4) mod 8] -> X_2 = e^((-j 2pi)/8 dot 4) dot X_1[k] $   
+
+== Resolução Matlab
+```Matlab
+%Questão 1
+pkg load signal;
+close all;
+clear all;
+clc;
+
+N= 8;
+k=0:N-1;
+n=0:N-1
+
+%Cria o vetor de impulso dos sinais
+x1 = [0,1,2,3,2,1,0,0];
+x2 = [2,1,0,0,0,1,2,3];
+
+%Faz a DFT de x1
+X = fft(x1);
+%Desloca X1 em 4
+Y = exp(j*pi*2*4*k/8).*X;
+
+%Faz a inversa
+y = ifft(Y);
+
+%Compara o resultado com x2
+subplot(211)
+stem(n,x2)
+title('x_2 (n)')
+subplot(212)
+stem(n,y)
+title('x_1 [(n-4) mod 8]')
+
+```
+
+
+#figure(
+  image("./Figuras/q1.svg",width:100%),
+  caption: [
+     Resultados da Questão 1 \ Fonte: Elaborada pelo autor
+  ],
+  supplement: "Figura"
+);
 
 #pagebreak()
 = Questão 2
@@ -44,7 +87,7 @@ Suponha que temos duas sequências de quantro pontos $x[n]$ e $h[n]$, da seguint
 \ d) Calcule 𝑦[𝑛] do item (c) multiplicando as DFT’s de 𝑥[𝑛] e ℎ[𝑛] e realizando uma DFT
 inversa.
 
-Resolução:
+== Resolução Teórica
 #set enum(numbering: "a)")
 + 
   $
@@ -95,13 +138,56 @@ Resolução:
   \ Y[k] = -3 - 6 dot e ^(-j (2pi)/4  dot 1k) + 3 dot e ^(-j (2pi)/4  dot 2k)   + 6 dot e ^(-j (2pi)/4  dot 3k)
   \ y[n] = -3delta[n]-6delta[n-1]+3delta[n-2]+6delta[n-3]
   $
+
+== Resolução Matlab
+```Matlab
+%Questão 2
+pkg load signal;
+close all;
+clear all;
+clc;
+
+N= 4;
+k=0:N-1;
+n=0:N-1;
+
+%criando sinais
+x = [1,0,-1,0]
+h = [1,2,4,8]
+
+X = fft(x);
+H = fft(h);
+
+%conv pela DFT
+convDFT = ifft(X.*H)
+
+%conv utilizando cconv
+convDIR = cconv(x,h,4)
+
+%plotando os sinais e comparando
+subplot(211)
+stem(n,convDFT);
+title('Convolução pela DFT')
+subplot(212)
+stem(n,convDIR)
+title('Convolução Dirata')
+```
+
+
+#figure(
+  image("./Figuras/q2.svg",width:100%),
+  caption: [
+     Resultados da Questão 2 \ Fonte: Elaborada pelo autor
+  ],
+  supplement: "Figura"
+);
   
 #pagebreak()
 
 = questão 3
 Dois sinais de comprimento finito, $x_1 [n]$ e $x_2 [n]$, são esboçados na figura a seguir. Suponha que $x_1 [n]$ e $x_2 [n]$ sejam nulos fora da região mostrada na figura. Seja $x_3 [n]$ a convolução circular de oito pontos de $x_1 [n]$ com $x_2[n]$. Determine $x_3[n]$
 
-Resolução:
+== Resolução Teórica
 
 - Os sinais dados tem a seguinte sequências:
 $
@@ -133,6 +219,41 @@ $
 $
 
 Temos que, $x_3 [2] = 9$
+
+== Resolução Matlab
+```Matlab
+%questão 3
+pkg load signal;
+close all;
+clear all;
+clc;
+
+N= 8;
+k=0:N-1;
+n=0:N-1;
+
+%criando os sinais
+x1 = [1,2,1,1,2,1,1,2]
+x2 = [0,1,3,2,0,0,0,0]
+
+%Fazendo a convolução de 8
+x3 = cconv(x1,x2,8)
+
+%Plotando o sinal
+stem(n,x3)
+ylim([0 9]);
+
+%Valor de x3[2] = 9
+```
+
+
+#figure(
+  image("./Figuras/q3.svg",width:100%),
+  caption: [
+     Resultados da Questão 2 \ Fonte: Elaborada pelo autor
+  ],
+  supplement: "Figura"
+);
 
 #pagebreak()
 = Questão 4
@@ -174,7 +295,7 @@ $
 = Questão 5
 Na figura a seguir são mostradas duas sequências de comprimento finito $x_1 [n]$ e $x_2 [n]$. Qual é o menor N tal que a convolução circular de N pontos de $x_1 [n]$ e $x_2 [n]$ seja igual à uma convolução linear dessas sequências.
 
-  Resolução
+== Resolução Teórica
 
   - Dada as figuras, obtém-se os seguintes pontos:
 $
@@ -187,6 +308,48 @@ $
 \ x_2 [n] = [0,2,0,0,-1,1] -> N_2 = 6
 \ N = N_1 + N_2 - 1 = 4 + 6 - 1 = 9
 $
+
+== Resolução Matlab
+```Matlab
+%questão 5
+pkg load signal;
+close all;
+clear all;
+clc;
+
+N= 9;
+k=0:N-1;
+n=0:N-1;
+
+%Cria o sinal com tamanho 9 para conv circular
+x1 = [1,-2,-1,3,0,0,0,0,0]
+x2 = [0,2,0,0,-1,1,0,0,0]
+cc = cconv(x1,x2,9);
+
+%Ajusta os sinais para os tamanhos originais
+%Faz a convolução linear
+x1 = [1,-2,-1,3]
+x2 = [0,2,0,0,-1,1]
+cl = conv(x1,x2);
+
+%Compara os resultados das convoluções linear e circular
+subplot(211)
+stem(n,cc);
+title('Convolução circular');
+subplot(212)
+stem(n,cl);
+title('Convolução Linear');
+```
+
+
+#figure(
+  image("./Figuras/q5.svg",width:100%),
+  caption: [
+     Resultados da Questão 2 \ Fonte: Elaborada pelo autor
+  ],
+  supplement: "Figura"
+);
+
 
 
 #pagebreak()
