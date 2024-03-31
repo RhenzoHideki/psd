@@ -367,30 +367,51 @@ multiplicando ambos os lados por $e^(-j 2pi/5 3k)$
 $e^(-j 2pi/5 3k) X_1[k] = X[k] $
 
 Sendo $X_1 [n]$
-$\ x_1[n] = 2 delta[n] + delta[n-1] + 2delta[n-2] - delta[n-3]$
-
-\
-Fazendo a DFT de $ X_1[k]$
-$ \ X_1[k]=2e^(-j 2pi/5 0k) + e^(-j 2pi/5 1k)+ 2 e^(-j 2pi/5 2k) - e^(-j 2pi/5 3k)
-\ X_1[k]=2 + e^(-j 2pi/5 1k)+ 2 e^(-j 2pi/5 2k) - e^(-j 2pi/5 3k)
-$
+$\ x_1[n] = 2 delta[n] + delta[n-1] + 2delta[n-2] - delta[n-3] + 0delta[n-4]$
 
 Sendo $x[n]$
-$ \ x[n] = 2delta[n] - delta[n-1]+c delta[n-3] + delta[n-4]$
+$ \ x[n] = 2delta[n] - delta[n-1] + 0delta[n-2] + c delta[n-3] + delta[n-4]$
 
-Fazendo a DFT de $ X[k]$
-$
-\ X_1[k]=2 - e^(-j 2pi/5 1k)+ c e^(-j 2pi/5 3k) + e^(-j 2pi/5 4k)
-
-$
 
 Calculando:
 
 $
-\ e^(-j 2pi/5 3k) X_1[k] = X[k]
-\ 2 - e^(-j 2pi/5 1k)+ c e^(-j 2pi/5 3k) + e^(-j 2pi/5 4k) =  e^(-j 2pi/5 3k)(2 + e^(-j 2pi/5 1k)+ 2 e^(-j 2pi/5 2k) - e^(-j 2pi/5 3k) )
-\ 2 - e^(-j 2pi/5 1k)+ c e^(-j 2pi/5 3k) + e^(-j 2pi/5 4k) =  2e^(-j 2pi/5 3k) + e^(-j 2pi/5 4k)+ 2 e^(-j 2pi/5 5k) - e^(-j 2pi/5 6k)
-\ 2 - e^(-j 2pi/5 1k)+ c e^(-j 2pi/5 3k) + e^(-j 2pi/5 4k) =  2e^(-j 2pi/5 3k) + e^(-j 2pi/5 4k)+ 2 - e^(-j 2pi/5 1k)
-\ c e^(-j 2pi/5 3k) =  2e^(-j 2pi/5 3k)
-\ c = 2
+\  X[k] = X_1[k] dot e^(-j 2pi/5 3k)
+\ x_1[n] = x[(n-2) mod 5] -> \ x_1[(n-3) mod 5] = 2 delta[(n-2) mod 5] - delta[(n-3) mod 5] \ + 0delta[(n-4) mod 5] - c delta[(n-5) mod 5] + delta[(n-6) mod 5]
+\ x_1[(n-3) mod 5] = 2 delta[n-2] - delta[n-3] \ + 0delta[n-4] - c delta[n] + delta[n-1]
+\ x_1[n] = 2 delta[n] + delta[n-1] + 2delta[n-2] - delta[n-3] + 0delta[n-4]
+ = 2 delta[n-2] - delta[n-3] \ + 0delta[n-4] - c delta[n] + delta[n-1]
+ c =2
 $
+
+#pagebreak()
+= Questão 7
+
+Suponha que tenhamos uma sequência de 1025 pontos de dados ( 1 a mais do que $N = 2^(10)$). Em vez de descartar o valor final, vamos preencher a sequência com zeros até ser comprimento seja $N = 2^(11)$, de modo que possamos usar um algoritmo FFT de raiz 2
++ Quantas multiplicações complexas são necessárias para se computar a DFT usando um algoritmo de FFT raiz 2?
++ Quantas multiplicações complexas seriam necessárias para se computar diretamente a DFT de 1025?
+
+== Resultados teóricos
+
+$
+\ N = 2^(11) = 2048 ; N 
+
+$
++ $
+  (N/2)log_2(N) -> (1025/2)log_2(1025) = 5215.72
+  $
+
++ $
+  
+  N^2 -> 1025^2 = 1050625
+  $
+
+= Quetão 8
+Considere a sequência de comprimento finito real $x[n]$ mosrada na Figura a seguir
++ Esboce a sequência de comprimento finito $y[n]$ cuja DFT de seis pontos seja
+\ $ Y[k] = W_6 ^(5k) X[k] $
+\ sendo $X[k]$ a DFT de seis pontos de x[n]
++ Esboce a seq7 de comprimento finito $w[n]$ cuja DFt de seis pontos seja
+\ $ W[k] = Im{X[k]} $
++ Esboce a sequência de comprimento finito $q[n]$ cuja DFT de três pontos seja
+\ $ Q[k] = X[2k +1], k = 0,1,2 $
