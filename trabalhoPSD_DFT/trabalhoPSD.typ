@@ -391,7 +391,7 @@ Suponha que tenhamos uma sequência de 1025 pontos de dados ( 1 a mais do que $N
 + Quantas multiplicações complexas são necessárias para se computar a DFT usando um algoritmo de FFT raiz 2?
 + Quantas multiplicações complexas seriam necessárias para se computar diretamente a DFT de 1025?
 
-== Resultados teóricos
+== Resolução Teórica
 
 $
 \ N = 2^(11) = 2048 ; N 
@@ -408,6 +408,19 @@ $
   N^2 -> 1025^2 = 1050625
   $
 
+== Resolução Matlab
+```Matlab
+%questao 7
+pkg load signal;
+close all;
+clear all;
+clc;
+
+N = 2^10 + 1;
+valor1 = (N/2)*log2(N)
+valor2 = N^2
+```
+
 = Quetão 8
 Considere a sequência de comprimento finito real $x[n]$ mosrada na Figura a seguir
 + Esboce a sequência de comprimento finito $y[n]$ cuja DFT de seis pontos seja
@@ -418,7 +431,7 @@ Considere a sequência de comprimento finito real $x[n]$ mosrada na Figura a seg
 + Esboce a sequência de comprimento finito $q[n]$ cuja DFT de três pontos seja
   \ $ Q[k] = X[2k +1], k = 0,1,2 $
 
-== Resultados teóricos
+== Resolução Teórica
 
 + 
   $
