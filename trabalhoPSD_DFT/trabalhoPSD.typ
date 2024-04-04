@@ -397,11 +397,13 @@ $
 \ N = 2^(11) = 2048 ; N 
 
 $
-+ $
++ 
+  $
   (N/2)log_2(N) -> (1025/2)log_2(1025) = 5215.72
   $
 
-+ $
++ 
+  $
   
   N^2 -> 1025^2 = 1050625
   $
@@ -409,9 +411,39 @@ $
 = Quetão 8
 Considere a sequência de comprimento finito real $x[n]$ mosrada na Figura a seguir
 + Esboce a sequência de comprimento finito $y[n]$ cuja DFT de seis pontos seja
-\ $ Y[k] = W_6 ^(5k) X[k] $
-\ sendo $X[k]$ a DFT de seis pontos de x[n]
-+ Esboce a seq7 de comprimento finito $w[n]$ cuja DFt de seis pontos seja
-\ $ W[k] = Im{X[k]} $
+  \ $ Y[k] = W_6 ^(5k) X[k] $
+  \ sendo $X[k]$ a DFT de seis pontos de x[n]
++ Esboce a sequência de comprimento finito $w[n]$ cuja DFt de seis pontos seja
+  \ $ W[k] = Im{X[k]} $
 + Esboce a sequência de comprimento finito $q[n]$ cuja DFT de três pontos seja
-\ $ Q[k] = X[2k +1], k = 0,1,2 $
+  \ $ Q[k] = X[2k +1], k = 0,1,2 $
+
+== Resultados teóricos
+
++ 
+  $
+    \ x[n] = [4,3,2,1,0,0]
+    \ Y[k] = W_6 ^(5k) X[k]
+    \ y[n] = x[(n-5) mod 6]
+    \ y[n] = 4 delta[(n-5) mod 6] + 3 delta[(n-6) mod 6] + 2 delta[(n-7) mod 6] \ + 1 delta[(n-8) mod 6] + 0 delta[(n-9) mod 6] + 0 delta[(n-8) mod 6]
+    \ y[n] = 4 delta[n-5] + 3 delta[n-6] + 2 delta[n-1] + 1 delta[n-2] + 0 delta[n-3] + 0 delta[n-4]
+  $
++
+  $
+  \ W[k] = Im{X[k]}
+  \ W[k] = Im{4 e^(j 2pi/6 0k) + 3 e^(j 2pi/6 1k) + 2 e^(j 2pi/6 2k) + e^(j 2pi/6 4k)}
+  \ W[k] = Im{4 + 3cos(2pi/6 1k) + 3j sin(2pi/6 1k) + 2cos(2pi/6 2k) + 2j sin(2pi/6 2k) + 1 cos(2pi/6 4k) + j sin(2pi/6 4k) }
+    \ W[k] = Im{3j sin(2pi/6 1k) 2j sin(2pi/6 2k) + j sin(2pi/6 4k) }
+    \ W[k] = 3j sin(2pi/6 1k) 2j sin(2pi/6 2k) + j sin(2pi/6 4k)
+  $
++ 
+  $
+  
+  \ Q[k] = X[2k + 1], k=0,1,2;
+  \ X[k] = 4 + 3 e^(j (2 k pi)/6 1) + 2e^(j (2 k pi)/6 2) + 1e^(j (2 k pi)/6 3)
+  \ k = 0 , X[2 dot 0 + 1 ] -> X[1] = 4 + 3 e^(j (2 pi)/6 1) + 2e^(j (2 pi)/6 2) + 1e^(j (2 pi)/6 3)
+  \ k = 1 , X[2 dot 1 + 1 ] -> X[3] = 4 + 3 e^(j (2 pi)/6 1 dot 3) + 2e^(j (2 pi)/6 2 dot 3) + 1e^(j (2 pi)/6 3 dot 3)
+  \ X[3] = 4 + 3 e^(j (2 pi)/6 3) + 2e^(j (2 pi)/6 ) + 1e^(j (2 pi)/6 3)
+  \ k = 2 , X[2 dot 2 + 1 ] -> X[5] = 4 + 3 e^(j (2 pi)/6 1 dot 5) + 2e^(j (2 pi)/6 2 dot 5) + 1e^(j (2 pi)/6 3 dot 5)
+  \ X[5] = 4 + 3 e^(j (2 pi)/6 5) + 2e^(j (2 pi)/6 4) + 1e^(j (2 pi)/6 3)
+  $
